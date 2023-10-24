@@ -1,0 +1,51 @@
+1.customer 테이블
+create table customer(
+id varchar(10),
+name varchar(20),
+age int(2),
+address varchar(40),
+primary key(id)
+);
+2.값 넣기
+insert into customer values('hong', '홍길동', 22, '경기');
+insert into customer values('dang', '당탕이', 23, '충북');
+insert into customer values('ppuni', '이뿌니', 30, '서울');
+insert into customer values('john', '존밴이', 28, '강원');
+3.purchase테이블
+create table purchase(
+no varchar(10),
+cust_id varchar(10),
+date varchar(10),
+product varchar(40),
+primary key(no),
+foreign key(cust_id) REFERENCES customer(id)
+);
+4.값 넣기
+insert into purchase values(1, 'hong', '01/22', 'TV');
+insert into purchase values(2, 'ppuni', '02/11', 'TV');
+insert into purchase values(3, 'john', '02/11', '냉장고');
+insert into purchase values(4, 'hong', '02/22', '세탁기');
+insert into purchase values(5, 'john', '03/11', '비디오');
+1.고객의 아이디와 이름을 아이디의 내림차순으로 조회하시오
+SELECT id, name
+FROM customer
+ORDER BY id DESC;
+2.나이가 25살 이상인 고객의 아이디와 이름을 조회하시오
+SELECT id, name
+FROM customer
+WHERE age >= 25;
+3.아이디가 ppuni인 고객의 주소를 경기로 변경하시오
+UPDATE customer
+SET address = '경기'
+WHERE id = 'ppuni';
+4.주소가 경기인 고객들의 평균 나이를 조회하시오
+SELECT AVG(age) AS avg_age
+FROM customer
+WHERE address = '경기';
+5.구매제품이 TV인 정보의 개수를 조회하시오
+SELECT COUNT(*) AS tv_purchase_count
+FROM purchase
+WHERE product = 'TV';
+6.일련번호가 4인 구매정보 데이터를 삭제하시오
+DELETE FROM purchase
+WHERE no = '4';
