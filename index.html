@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 문서의 문자 인코딩 및 뷰포트 설정 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- 부트스트랩 CSS 파일을 불러옴 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    
+    <!-- jQuery 라이브러리를 불러옴 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery.min.js"></script>
+    
+    <!-- 웹 페이지 제목 설정 -->
+    <title>롯데자이언츠 선수 등록</title>
+    
+    <!-- 스타일 설정 -->
+    <style>
+        /* 배경 이미지 및 스타일 설정 */
+        .join {
+            width: 100%;
+            height: 300px;
+            background-image: linear-gradient(0deg,
+                rgba(0, 0, 0, 0.5),
+                rgba(0, 0, 0, 0.5)),
+                url("https://contents.sixshop.com/uploadeedFiles/161425/product/image_1678694838798.jpg");
+            background-position: center 30%;
+            background-size: cover;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 폼 컨트롤 스타일 설정 */
+        .form-control {
+            margin: 20px auto 20px auto;
+        }
+    </style>
+    
+    <!-- JavaScript 함수 설정 -->
+    <script>
+        // '등록' 버튼 클릭 시 실행되는 함수
+        function join() {
+            // 입력된 데이터를 JavaScript로 가져오기
+            let pid = $('#pid').val();         // 선수 번호
+            let pname = $('#pname').val();     // 선수 이름
+            let pposition = $('#pposition').val(); // 선수 포지션
+            let pdate = $('#pdate').val();     // 선수 등록일
+            let pgrade = $('#pgrade').val();   // 선수 등급
+            
+            // FormData 객체를 사용하여 데이터 생성
+            let formData = new FormData();
+            formData.append('pid', pid);
+            formData.append('pname', pname);
+            formData.append('pposition', pposition);
+            formData.append('pdate', pdate);
+            formData.append('pgrade', pgrade);
+            
+            // 서버로 데이터를 전송하는 POST 요청
+            fetch('/join', {
+                method: "POST",
+                body: formData
+            }).then((res) => res.json()).then((data) => {
+                // 서버의 응답 메시지를 경고창으로 표시
+                alert(data['msg']);
+                // 페이지 새로고침
+                window.location.reload();
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- 컨테이너 디자인 -->
+    <div class="container">
+        <!-- 선수 번호 입력 필드 -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pid">
+            <label for="floatingInput">선수 번호</label>
+        </div>
+        <!-- 선수 이름 입력 필드 -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pname">
+            <label for="floatingInput">선수 이름</label>
+        </div>
+        <!-- 선수 포지션 입력 필드 -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pposition">
+            <label for="floatingInput">선수 포지션</label>
+        </div>
+        <!-- 선수 등록일 입력 필드 -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pdate">
+            <label for="floatingInput">선수 등록일</label>
+        </div>
+        <!-- 선수 등급 입력 필드 -->
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="pgrade">
+            <label for="floatingInput">선수 등급</label>
+        </div>
+        <!-- '등록' 버튼 -->
+        <button onclick="join()" type="button" class="btn btn-success">등록</button>
+    </div>
+</body>
+</html>
