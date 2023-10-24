@@ -1,0 +1,87 @@
+1.giants_player 테이블
+create table giants_player(
+pid int(4),
+pname varchar(15),
+pposition varchar(10),
+pdate varchar(8),
+pgrade varchar(1),
+primary key(pid)
+);
+2.값 넣기
+insert into giants_player values(1001, '스트레일리', '투수', 20200321, 'C');
+insert into giants_player values(1002, '나균안', '투수', 20170221, 'S');
+insert into giants_player values(1003, '이대호', '내야수', 20210301, 'A');
+insert into giants_player values(1004, '박제현', '내야수', 20160421, 'S');
+insert into giants_player values(1005, '황성빈', '외야수', 20150510, 'B');
+insert into giants_player values(1006, '유강남', '포수', 20230228, 'A');
+3.giants_coach 테이블
+create table giants_coach(
+cid varchar(3),
+cname varchar(15),
+cposition varchar(10),
+cdate varchar(8),
+primary key(cid)
+);
+4.값 넣기
+insert into giants_coach values('c01', '배영수', '투수', 20230101);
+insert into giants_coach values('c02', '박흥식', '내야수', 20210218);
+insert into giants_coach values('c03', '전준호', '외야수', 20221026);
+insert into giants_coach values('c04', '최경철', '포수', 20170820);
+5.giants_money 테이블
+create table giants_money(
+pid int(4),
+pcost int(5),
+cid varchar(3),
+ccost int(5),
+primary key(pid),
+primary key(cid),
+foreign key(pid) REFERENCES giants_player(pid),
+foreign key(cid) REFERENCES giants_coach(cid)
+);
+6.값 넣기
+insert into giants_money values(1001, 10000, 'c01', 7000);
+insert into giants_money values(1002, 8000, 'c01', 7000);
+insert into giants_money values(1003, 15000, 'c02', 6000);
+insert into giants_money values(1004, 20000, 'c02', 6000);
+insert into giants_money values(1005, 6000, 'c03', 5000);
+insert into giants_money values(1006, 4000, 'c04', 4000);
+1.각 선수의 선수 이름, 선수 등급, 선수 연봉을 선수 연봉이 높은 순으로 조회하시오.
+SELECT p.pname, p.pgrade, m.pcost
+FROM giants_player p
+JOIN giants_money m ON p.pid = m.pid
+ORDER BY m.pcost DESC;
+2.선수의 포지션별 연봉이 높은 순으로 선수 포지션, 선수 연봉의 합계를 조회하시오.
+SELECT p.pposition, SUM(m.pcost) AS total_salary
+FROM giants_player p
+JOIN giants_money m ON p.pid = m.pid
+GROUP BY p.pposition
+ORDER BY total_salary DESC;
+3.모든 코치와 선수의 수를 조회하시오.
+SELECT '선수' AS role, COUNT(*) AS count FROM giants_player
+UNION ALL
+SELECT '코치' AS role, COUNT(*) AS count FROM giants_coach;
+4.각 코치들이 관리하는 선수 목록을 조회하시오.
+SELECT c.cname AS coach_name, p.pname AS player_name
+FROM giants_coach c
+LEFT JOIN giants_money m ON c.cid = m.cid
+LEFT JOIN giants_player p ON m.pid = p.pid;
+5.코치별 관리선수의 코치번호, 코치이름, 코치포지션, 관리선수, 관리선수연봉합계, 관리선수평균연봉, 관리선수최대연봉, 관리선수최소연봉을 조회하시오.
+SELECT coach_id, coach_name, coach_position, player_count, total_salary, avg_salary, max_salary, min_salary
+FROM (
+    SELECT c.cid AS coach_id, c.cname AS coach_name, c.cposition AS coach_position,
+           COUNT(p.pid) AS player_count,
+           SUM(m.pcost) AS total_salary,
+           AVG(m.pcost) AS avg_salary, MAX(m.pcost) AS max_salary, MIN(m.pcost) AS min_salary
+    FROM giants_coach c
+    LEFT JOIN giants_money m ON c.cid = m.cid
+    LEFT JOIN giants_player p ON m.pid = p.pid
+    GROUP BY c.cid, c.cname, c.cposition
+) AS subquery
+ORDER BY min_salary DESC;
+6.코치별 관리 선수 연봉의 합이 6000이상인 코치 번호, 코치 이름, 관리 선수 연봉의 합을 조회하시오.
+SELECT c.cid AS coach_id, c.cname AS coach_name, SUM(m.pcost) AS total_salary
+FROM giants_coach c
+LEFT JOIN giants_money m ON c.cid = m.cid
+GROUP BY c.cid, c.cname
+HAVING SUM(m.pcost) >= 6000
+ORDER BY total_salary DESC;
