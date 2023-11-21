@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우산 대여 서비스</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        #loanList {
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>우산 대여 서비스</h1>
+    <table id="loanList" border="1">
+        <tr>
+            <td rowspan="1">학번</td>
+            <td rowspan="1">학생 이름</td>
+            <td rowspan="1">우산 번호</td>
+            <td rowspan="1">대여일</td>
+            <td rowspan="1">반납일</td>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td>{{result[0]}}</td>
+            <td>{{result[1]}}</td>
+            <td>{{result[2]}}</td>
+            <td>{{result[3]}}</td>
+            <td>{{result[4]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
