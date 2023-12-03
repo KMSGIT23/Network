@@ -1,15 +1,14 @@
 from flask import Flask, render_template
 import connectDB
-import cv2
-from pyzbar.pyzbar import decode
-
-
+import qrscanner
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     try:
+        scan = qrscanner
+        insert = connectDB.insert_sql(scan)
         results = connectDB.select_sql()
         return render_template('web.html', results=results)
     except Exception as e:
