@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.js"],"names":["borrow","document","querySelector","returnback"],"mappings":";;AAAA,IAAIA,MAAM,GAAGC,QAAQ,CAACC,aAAT,CAAuB,SAAvB,CAAb;AACA,IAAIC,UAAU,GAAGF,QAAQ,CAACC,aAAT,CAAuB,aAAvB,CAAjB","sourcesContent":["var borrow = document.querySelector(\"#borrow\");\r\nvar returnback = document.querySelector(\"#returnback\");"],"file":"main.dev.js"}

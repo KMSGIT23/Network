@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우산 대여 서비스</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            width: 200px;
+            height: auto;
+            margin-bottom: 50px;
+        }
+
+        button {
+            background-color: skyblue;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+        }
+
+
+        #borrow, #return {
+            margin-right: 10px;
+        }
+        #borrow{
+            position:absolute;
+            left:600px;
+            top:550px;
+        }
+        #return{
+            position:absolute;
+            right:590px;
+            top:550px;
+        }
+        a:visited{
+            color:white;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="static/umbrella.png">
+    <h1>우산 대여 서비스</h1>
+    <button id="borrow" type="button"><a href="borrow.html">빌리기</a></button>
+    <button id="return" type="button"><a href="returnback.html">반납하기</a></button>
+    <script src="static/main.js"></script>
+</body>
+
+</html>
